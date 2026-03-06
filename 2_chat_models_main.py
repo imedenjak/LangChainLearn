@@ -1,4 +1,3 @@
-import requests
 from dotenv import load_dotenv
 
 from langchain.chat_models import init_chat_model
@@ -6,7 +5,6 @@ from langchain.messages import HumanMessage, SystemMessage, AIMessage
 
 load_dotenv()
 
-# Chat models are pure LLMs. They only generate text. They do not decide to call tools, do not plan, and do not execute actions.
 model = init_chat_model(
     model = 'gpt-4.1-mini',
     temperature = 0.1,

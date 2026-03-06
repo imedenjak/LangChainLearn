@@ -29,7 +29,7 @@ class ResponseFormat:
     description="Get the current weather for a given location",
     return_direct=False,
 )
-def get_weather(city: str, context: Context):
+def get_weather(city: str):
     response = requests.get(f"http://wttr.in/{city}?format=j1")
     return response.json()
 
@@ -79,7 +79,7 @@ response = agent.invoke(
     config=config,
 )
 
-
+print()
 print("--- 1st response ---")
 # print(response["structured_response"])
 print(response["structured_response"].summary)
@@ -88,7 +88,9 @@ print(f"Temperature celsius: {response['structured_response'].temperature_celsiu
 # print(f"Humidity: {response['structured_response'].humidity}")
 
 
-config = {"configurable": {"thread_id": 2}}     # Different thread_id to simulate a different conversation, but the same user
+config = {
+    "configurable": {"thread_id": 2}
+}  # Different thread_id to simulate a different conversation, but the same user
 
 # 2nd question - agent should use the cached results from the previous question and return the final response without calling any tools
 response = agent.invoke(
@@ -101,5 +103,7 @@ response = agent.invoke(
     config=config,
 )
 
+print()
 print("--- 2nd response ---")
 print(response["structured_response"].summary)
+print()
