@@ -29,7 +29,7 @@ class ResponseFormat:
     description="Get the current weather for a given location",
     return_direct=False,
 )
-def get_weather(city: str, context: Context) -> ResponseFormat:
+def get_weather(city: str, context: Context):
     response = requests.get(f"http://wttr.in/{city}?format=j1")
     return response.json()
 
@@ -68,6 +68,7 @@ agent = create_agent(
 
 config = {"configurable": {"thread_id": 1}}
 
+# 1st question - agent should call locate_user tool, then get_weather tool, and return the final response
 response = agent.invoke(
     {
         "messages": [
@@ -78,8 +79,27 @@ response = agent.invoke(
     config=config,
 )
 
-print(response["structured_response"])
+
+print("--- 1st response ---")
+# print(response["structured_response"])
 print(response["structured_response"].summary)
 print(f"Temperature celsius: {response['structured_response'].temperature_celsius}")
 # print(f'Temperature fahrenheit: {response["structured_response"].temperature_fahrenheit}')
-print(f"Humidity: {response['structured_response'].humidity}")
+# print(f"Humidity: {response['structured_response'].humidity}")
+
+
+config = {"configurable": {"thread_id": 2}}     # Different thread_id to simulate a different conversation, but the same user
+
+# 2nd question - agent should use the cached results from the previous question and return the final response without calling any tools
+response = agent.invoke(
+    {
+        "messages": [
+            {"role": "user", "content": "And is this usual?"},
+        ]
+    },
+    context=Context(user_id="123"),
+    config=config,
+)
+
+print("--- 2nd response ---")
+print(response["structured_response"].summary)
