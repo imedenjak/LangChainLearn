@@ -19,5 +19,5 @@ texts = [
 
 vector_store = FAISS.from_texts(texts, embedding=embeddings)
 
-print(vector_store.similarity_search("Apples are my favorite food.", k=7))
-# print(vector_store.similarity_search("Linus is a great computer.", k=7))
+# print(vector_store.similarity_search("Apples are my favorite food.", k=7))
+print(vector_store.similarity_search("Linus is a great computer.", k=7))
