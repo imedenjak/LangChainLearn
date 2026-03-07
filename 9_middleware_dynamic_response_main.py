@@ -1,10 +1,9 @@
-from dataclasses import dataclass
 from dotenv import load_dotenv
 
 from langchain.agents import create_agent
 from langchain.chat_models import init_chat_model
 from langchain.agents.middleware import ModelRequest, ModelResponse, wrap_model_call
-from langchain.messages import HumanMessage, SystemMessage, AIMessage
+from langchain.messages import HumanMessage, SystemMessage
 
 load_dotenv()
 
